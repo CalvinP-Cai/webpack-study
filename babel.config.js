@@ -17,5 +17,7 @@ module.exports = {
       }
     ],
     '@babel/preset-react',
+    // 支持ts语法
+    '@babel/preset-typescript'
   ]
 }

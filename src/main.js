@@ -3,9 +3,11 @@
 // import ReactDOM from "react-dom";
 // import App from './packages/React/App.jsx'
 
+import axios from 'axios'
 
 import { createApp } from 'vue'
-import App from './packages/Vue/App.vue'
+
+import App from './packages/Vue/App'
 
 // way1:
 // import Login from './pages/Login/index'
@@ -178,3 +180,17 @@ console.log('npm i webpack-dev-server -D');
 const app = createApp(App)
 
 app.mount("#app");
+
+/**
+ * 代理
+ */
+axios.get('/api/users').then(response => {
+  console.log(response);
+})
+
+/**
+ * 支持ts
+ * 
+ * 生成tsconfig.json
+ * npx tsc --init
+ */
