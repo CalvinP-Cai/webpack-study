@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
+    "build:common": "webpack --config ./config/webpack.common.js --env production",
     "watch": "webpack --config webpack.config.js --watch",
     "serve": "webpack serve --config webpack.config.js",
     "check": "tsc --noEmit"
