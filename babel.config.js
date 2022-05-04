@@ -1,5 +1,7 @@
 module.exports = {
-  plugins: [],
+  plugins: [
+    ['react-refresh/babel']
+  ],
   presets: [
     [
       '@babel/preset-env',
@@ -13,6 +15,7 @@ module.exports = {
         useBuiltIns: 'usage',
         corejs: 3
       }
-    ]
+    ],
+    '@babel/preset-react',
   ]
 }

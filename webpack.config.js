@@ -4,11 +4,17 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+// React hot
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 
-const port  = process.env.port || 3002
+// vue hot
+const { VueLoaderPlugin } = require('vue-loader')
+// const VuePlugin = require('vue-loader/lib/plugin')    
+
+const port  = process.env.PORT || 3002
 
 module.exports = {
-  mode: 'development',
+  mode: process.env.NODE_ENV || 'development',
   devtool: false,
   
   // watch: true,
@@ -16,7 +22,25 @@ module.exports = {
   devServer: {
     port: port,
     // 热更新
-    hot: true
+    hot: true,
+    hotOnly: true,
+    // 自动打开浏览器
+    open: false,
+    // 压缩
+    compress: true,
+    /**
+     * 指定本地服务所在的目录 
+     * 一般 devServer 中 publicPath 和 output 的 publicPath 设置一样
+     */
+    // publicPath: '/'
+    /**
+     * 打包之后的资源如果依赖了其他资源的路径
+     */
+    contentBase: path.resolve(__dirname, 'public'),
+    watchContentBase: true,
+
+    // 
+    // historyApiFallback: true,
   },
   // 入口文件
   entry: './src/main.js',
@@ -26,8 +50,21 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     // 输出的文件名
     filename: './bundle.js',
+    /**
+     * output
+     *   - publicPath: index.html内部的引用路径
+     *   - 域名 + publicPath + filename
+     */
+    // publicPath: '/'
     // 静态资源输出
     // assetModuleFilename: 'asset/[name].[hash:8][ext]',
+  },
+  
+  resolve: {
+    // alias: {
+    //   vue: 'vue/dist/vue.esm.js',
+    //   'vue-router': path.join(__dirname, '..', 'src')
+    // }
   },
   // 插件
   module: {
@@ -46,7 +83,8 @@ module.exports = {
         test: /\.(css|less)$/,
         // 说明：执行 从右向左，从下向上， 先把less转成 css 在 使用 css-loader转成样式
         use: [
-          'style-loader', 
+          'style-loader',
+          'vue-style-loader',
           {
             loader: 'css-loader',
             // importLoaders 的使用，处理 @import './test.css' 等，表示从上一步重新执行
@@ -127,7 +165,7 @@ module.exports = {
         }
       },
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         use: [
           'babel-loader',
@@ -153,6 +191,10 @@ module.exports = {
           //   }
           // }
         ]
+      },
+      {
+        test: /\.vue$/,
+        use: ['vue-loader']
       }
     ]
   },
@@ -180,7 +222,11 @@ module.exports = {
           // to: ''
         }
       ]
-    })
+    }),
+    new ReactRefreshWebpackPlugin(),
+
+    new VueLoaderPlugin()
+    // new VuePlugin()
   ]
 }
 

@@ -1,3 +1,12 @@
+
+// import React from "react";
+// import ReactDOM from "react-dom";
+// import App from './packages/React/App.jsx'
+
+
+import { createApp } from 'vue'
+import App from './packages/Vue/App.vue'
+
 // way1:
 // import Login from './pages/Login/index'
 // Login()
@@ -65,7 +74,7 @@
  * asset/source     --> raw-loader
  * asset
  */
-console.log(1111111)
+// console.log(1111111)
 
 
 /**
@@ -123,3 +132,49 @@ console.log('npm i webpack-dev-server -D');
 
 //   })
 // }
+
+/** 
+ * react hot 
+ * 
+ * npm i @babel/preset-react -D
+ * 
+ * npm install -D @pmmmwh/react-refresh-webpack-plugin react-refresh
+ * 
+ * 在 webpack.config.js中添加 plugins 插件，
+ * 在babel.config.js中添加 jsx 插件
+ *  plugins: [
+      ['react-refresh/babel']
+    ],
+ */
+
+// ReactDOM.render(
+//   <App title="Taylor" />,
+//   document.getElementById('app')
+// );
+
+
+/**
+ * vue hot
+ * 默认安装的是3.x
+ * npm i vue
+ * 
+ * npm i vue-loader
+ * 
+ * webpack编辑 识别 .vue 结尾的文件 在 webpack.config.js 中添加插件
+ * 在rules 中配置规则
+ * {
+    test: /\.vue$/,
+    use: ['vue-loader']
+  }
+ * 15.x之前不需要自己处理
+ * const { VueLoaderPlugin } = require('vue-loader')
+ * new VueLoaderPlugin()
+ * 
+ * 为了使 webpack识别 template 和 style
+ * npm i vue-style-loader vue-template-compiler
+ */
+
+
+const app = createApp(App)
+
+app.mount("#app");
